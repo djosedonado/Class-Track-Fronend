@@ -4,7 +4,7 @@ import { CreateUser, User } from "../../interfaces/users/user.interface";
 
 interface UserState {
   users: User[];
-  createUser: (user: CreateUser) => void;
+  createUser: (user: CreateUser) => Promise<any>;
 }
 
 const useUserStore = create<UserState>((set) => ({
@@ -12,8 +12,7 @@ const useUserStore = create<UserState>((set) => ({
   createUser: async (user: CreateUser) => {
     try {
       const newUser = await CreateUserService(user);
-      console.log(newUser)
-      //set((state) => ({ ...state, users: [...state.users, newUser] }));
+      return newUser;
     } catch (error) {
       return error;
     }

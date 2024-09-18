@@ -8,16 +8,37 @@ export const RegisterUserPage = () => {
   const { getRoles, roles } = useRoles();
   const { createUser } = useRepositoryUser();
   const { handleChange, form, resetForm } = useForm<CreateUser>({
-    id: Number(),
-    email: "",
+    id: 1,
     name: "",
+    email: "",
     password: "",
     roles: [],
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createUser(form);
+    console.log(form);
+    await createUser(form).then((response) => {
+      if (response.status === 201) {
+        Swal.fire({
+          title: "Usuario creado exitosamente!",
+          text: "Se ha creado el usuario correctamente",
+          icon: "success",
+          confirmButtonText: "Aceptar",
+        }).then((res) => {
+          if (res.isConfirmed) {
+            resetForm();
+          }
+        });
+      } else {
+        Swal.fire({
+          title: "Error al crear el usuario",
+          text: "Ha ocurrido un error al crear el usuario",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -42,7 +63,7 @@ export const RegisterUserPage = () => {
               value={`${form.id}`}
               validationType="numeric"
               onChange={handleChange}
-              minLength={2}
+              minLength={1}
               maxLength={10}
             />
             <InputForm
@@ -52,7 +73,7 @@ export const RegisterUserPage = () => {
               error="error porfavor revise el campo"
               value={form.name}
               onChange={handleChange}
-              minLength={3}
+              minLength={1}
               maxLength={20}
             />
           </div>
@@ -60,11 +81,11 @@ export const RegisterUserPage = () => {
             <InputForm
               label="Email"
               name="email"
-              type="email"
+              type="text"
               error="error porfavor revise el campo"
               value={form.email}
               onChange={handleChange}
-              minLength={6}
+              minLength={1}
               maxLength={50}
             />
             <InputForm
@@ -74,7 +95,7 @@ export const RegisterUserPage = () => {
               error="error porfavor revise el campo"
               value={form.password}
               onChange={handleChange}
-              minLength={6}
+              minLength={1}
               maxLength={30}
             />
           </div>

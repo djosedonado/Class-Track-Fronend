@@ -1,25 +1,8 @@
 import api from "../../api/axios";
-import axios from "axios";
 import { CreateUser } from "../../interfaces/users/user.interface";
 
 export const CreateUserService = async (data: CreateUser) => {
-  try {
-    const response = await api.post("/users/save", {
-      id: 1,
-      name: "a",
-      email: "a@gmail.com",
-      password: "123456",
-    });
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("Axios error:", error.message);
-      console.error("Error details:", error.response?.data);
-    } else {
-      console.error("Unexpected error:", error);
-    }
-    throw error; // Re-throw the error for further handling if needed
-  }
+  return api.post("/users/save", data);
 };
 
 export const SearchAllUserService = () => {

@@ -4,11 +4,15 @@ const api = axios.create({
   baseURL: "http://localhost:8080",
   headers: {
     "Content-Type": "application/json",
-  }
+  },
+  // Si no necesitas credenciales, asegúrate de que `withCredentials` esté en false
+  withCredentials: false,
 });
 
+// Añade un interceptor para ver las solicitudes y respuestas (opcional)
 api.interceptors.request.use(
-  function (config) {
+  (config) => {
+    console.log("Request made with ", config);
     return config;
   },
   (error) => {
@@ -17,10 +21,12 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  function (response) {
+  (response) => {
+    console.log("Response received", response);
     return response;
   },
-  function (error) {
+  (error) => {
+    console.log("Response error", error);
     return Promise.reject(error);
   }
 );
