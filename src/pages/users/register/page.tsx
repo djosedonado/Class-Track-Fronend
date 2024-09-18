@@ -1,19 +1,31 @@
+import { useEffect } from "react";
 import { InputForm, useForm } from "../../../components/index";
 import { CreateUser } from "../../../interfaces/users/user.interface";
-
+import { useRoles } from "../../../storas";
+import { useRepositoryUser } from "../../../storas/users/user.stora";
+import Swal from "sweetalert2";
 export const RegisterUserPage = () => {
+  const { getRoles, roles } = useRoles();
+  const { createUser } = useRepositoryUser();
   const { handleChange, form, resetForm } = useForm<CreateUser>({
+    id: Number(),
     email: "",
-    firstname: "",
-    lastname: "",
+    name: "",
     password: "",
+    roles: [],
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Datos del formulario", form);// form tiene todo el objeto de los datos de la interface CreateUser
-    resetForm(); // Limpia el formulario completo
+    await createUser(form);
   };
+
+  useEffect(() => {
+    if (roles.length === 0) {
+      getRoles();
+    }
+  }, [getRoles, roles.length]);
+
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="shadow-2xl p-8 max-sm:">
@@ -23,21 +35,22 @@ export const RegisterUserPage = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex gap-x-5 max-sm:flex-col">
             <InputForm
-              label="Nombres"
-              name="lastname"
+              label="Numero de Documento"
+              name="id"
               type="text"
               error="error porfavor revise el campo"
-              value={form.lastname}
+              value={`${form.id}`}
+              validationType="numeric"
               onChange={handleChange}
-              minLength={3}
-              maxLength={20}
+              minLength={2}
+              maxLength={10}
             />
             <InputForm
-              label="Apellidos"
-              name="firstname"
+              label="Nombres"
+              name="name"
               type="text"
               error="error porfavor revise el campo"
-              value={form.firstname}
+              value={form.name}
               onChange={handleChange}
               minLength={3}
               maxLength={20}
@@ -65,6 +78,33 @@ export const RegisterUserPage = () => {
               maxLength={30}
             />
           </div>
+          <div className="p-5">
+            <select
+              name="roles"
+              onChange={(e) => {
+                const selectedRole = roles.find(
+                  (role) => role.id === parseInt(e.target.value)
+                );
+                if (selectedRole) {
+                  // Actualiza el campo de roles
+                  handleChange({
+                    target: {
+                      name: "roles",
+                      value: [{ id: selectedRole.id, name: selectedRole.name }],
+                    },
+                  } as unknown as React.ChangeEvent<HTMLSelectElement>);
+                }
+              }}
+            >
+              <option value="">Seleccione una Opcion</option>
+              {roles.map((role) => (
+                <option key={role.id} value={role.id}>
+                  {role.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div>
             <button
               type="submit"

@@ -1,9 +1,14 @@
-interface User {
+export interface Role {
   id: number;
-  lastname: string;
-  firstname: string;
-  email: string;
-  password: string;
+  name: string;
 }
 
-export type CreateUser = Omit<User, "id">;
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  roles: Role[];
+}
+
+export type CreateUser = User;
