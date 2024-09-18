@@ -11,8 +11,8 @@ export const RegisterUserPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submitting form:", form);
-    resetForm();
+    console.log("Datos del formulario", form);// form tiene todo el objeto de los datos de la interface CreateUser
+    resetForm(); // Limpia el formulario completo
   };
   return (
     <div className="flex justify-center items-center pt-8">
