@@ -22,7 +22,7 @@ export const RegisterUserPage = () => {
       if (response.status === 201) {
         Swal.fire({
           title: "Usuario creado exitosamente!",
-          text: "Se ha creado el usuario correctamente",
+          text: `${response.data}`,
           icon: "success",
           confirmButtonText: "Aceptar",
         }).then((res) => {
@@ -50,8 +50,8 @@ export const RegisterUserPage = () => {
   return (
     <div className="flex justify-center items-center pt-8">
       <div className="shadow-2xl p-8 max-sm:">
-        <div className="my-5">
-          <h1 className="text-center font-bold text-2xl">Register User</h1>
+        <div className="my-8">
+          <h1 className="text-center font-bold text-3xl">Register User</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="flex gap-x-5 max-sm:flex-col">
@@ -59,8 +59,7 @@ export const RegisterUserPage = () => {
               label="Numero de Documento"
               name="id"
               type="text"
-              error="error porfavor revise el campo"
-              value={`${form.id}`}
+              value={form.id.toString()}
               validationType="numeric"
               onChange={handleChange}
               minLength={1}
@@ -70,10 +69,9 @@ export const RegisterUserPage = () => {
               label="Nombres"
               name="name"
               type="text"
-              error="error porfavor revise el campo"
               value={form.name}
               onChange={handleChange}
-              minLength={1}
+              minLength={3}
               maxLength={20}
             />
           </div>
@@ -81,26 +79,25 @@ export const RegisterUserPage = () => {
             <InputForm
               label="Email"
               name="email"
-              type="text"
-              error="error porfavor revise el campo"
+              type="email"
               value={form.email}
               onChange={handleChange}
-              minLength={1}
+              minLength={6}
               maxLength={50}
             />
             <InputForm
               label="Contraseña"
               name="password"
               type="password"
-              error="error porfavor revise el campo"
               value={form.password}
               onChange={handleChange}
-              minLength={1}
+              minLength={6}
               maxLength={30}
             />
           </div>
-          <div className="p-5">
+          <div className="my-5">
             <select
+              className="block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               name="roles"
               onChange={(e) => {
                 const selectedRole = roles.find(
@@ -117,19 +114,21 @@ export const RegisterUserPage = () => {
                 }
               }}
             >
-              <option value="">Seleccione una Opcion</option>
+              <option value="" className="p-2">
+                Seleccione una Opcion
+              </option>
               {roles.map((role) => (
-                <option key={role.id} value={role.id}>
+                <option key={role.id} value={role.id} className="p-2">
                   {role.name}
                 </option>
               ))}
             </select>
           </div>
 
-          <div>
+          <div className="px-36">
             <button
               type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-3xl"
             >
               Register
             </button>

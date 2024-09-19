@@ -1,7 +1,7 @@
-import { RegisterUserPage } from "./pages/users/index";
+import { RoutesIndex } from "./routes/route";
 
 function App() {
-  return <RegisterUserPage />;
+  return <RoutesIndex />;
 }
 
 export default App;

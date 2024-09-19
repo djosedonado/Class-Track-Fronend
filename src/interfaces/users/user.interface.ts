@@ -1,7 +1,4 @@
-export interface Role {
-  id: number;
-  name: string;
-}
+import { Role } from "../permissions/role";
 
 export interface User {
   id: number;
@@ -12,3 +9,5 @@ export interface User {
 }
 
 export type CreateUser = User;
+
+export type SingIn = Omit<User, "id" | "name" | "roles">;

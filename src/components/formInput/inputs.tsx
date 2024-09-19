@@ -6,7 +6,6 @@ interface InputProps {
   name: string;
   value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
   disabled?: boolean;
   required?: boolean;
   minLength?: number;
@@ -21,7 +20,6 @@ export const InputForm: React.FC<InputProps> = ({
   onChange,
   type,
   disabled = false,
-  error,
   maxLength = Infinity,
   validationType = "all",
   minLength = 0,
@@ -64,7 +62,7 @@ export const InputForm: React.FC<InputProps> = ({
     }
 
     if (inputValue.length < minLength) {
-      setErrorMessage(`${error}`);
+      setErrorMessage(`Digitos permitidos ${minLength}`);
       setIsValid(false);
     } else {
       setErrorMessage("");
@@ -73,7 +71,7 @@ export const InputForm: React.FC<InputProps> = ({
   };
 
   return (
-    <div className="mb-4 w-full md:w-3/4 lg:w-1/2">
+    <div className="mb-4 w-full">
       <label className="block text-gray-700 text-sm font-bold mb-2">
         {label}
       </label>

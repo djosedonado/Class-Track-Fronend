@@ -1,10 +1,14 @@
 import { create } from "zustand";
-import { SearchAllRoles } from "../../services/roles/role.service";
-import { Role } from "../../interfaces/permissions/role";
+import {
+  SearchAllRoles,
+  CreateRoleService,
+} from "../../services/roles/role.service";
+import { Role, CreateRole } from "../../interfaces/permissions/role";
 
 interface RoleState {
   roles: Role[];
   getRoles: () => Promise<any>;
+  createRole: (role: CreateRole) => Promise<any>;
 }
 
 const useRoleStore = create<RoleState>((set) => ({
@@ -12,6 +16,14 @@ const useRoleStore = create<RoleState>((set) => ({
   getRoles: async () => {
     const response = await SearchAllRoles();
     set((state) => ({ roles: response.data }));
+  },
+  createRole: async (role: CreateRole) => {
+    try {
+      const newRole = await CreateRoleService(role);
+      return newRole;
+    } catch (error) {
+      return error;
+    }
   },
 }));
 
