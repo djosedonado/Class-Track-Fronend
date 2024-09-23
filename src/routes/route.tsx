@@ -5,6 +5,7 @@ import {
   ListUsersPage,
   UpdateUserPage,
 } from "../pages/users/index";
+import { SaveGradePage } from "../pages/grades/index";
 import { CreateRolesPage } from "../pages/roles/index";
 import { Header } from "../layouts/index";
 import { NotFoundPage } from "../pages/404/page";
@@ -26,6 +27,7 @@ export const RoutesIndex = () => {
         <Route path="/update-users" element={<UpdateUserPage user={user} />} />
         <Route path="/list-all-users" element={<ListUsersPage />} />
         <Route path="/register-roles" element={<CreateRolesPage />} />
+        <Route path="/save-grade" element={<SaveGradePage />} />
         <Route
           element={
             <RutePrivate IsAuth={true} IsLoading={false} role={Roles.STUDENT} />
