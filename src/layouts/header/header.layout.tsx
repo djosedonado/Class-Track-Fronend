@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(false);
+  const toggleMenu = (value: boolean) => {
+    setIsOpen(value);
   };
 
   return (
@@ -14,17 +14,6 @@ export const Header = () => {
         <NavLink to="/" className="text-white text-lg font-bold">
           Logo
         </NavLink>
-        {/* Botón del menú en dispositivos móviles */}
-        <div className="lg:hidden">
-          <button
-            onClick={toggleMenu}
-            className="text-white focus:outline-none"
-          >
-            {isOpen ? "Cerrar" : "Menú"}
-          </button>
-        </div>
-
-        {/* Enlaces de navegación */}
         <div className={`lg:flex ${isOpen ? "block" : "hidden"}`}>
           <NavLink
             to="/register-roles"

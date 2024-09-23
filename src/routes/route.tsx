@@ -5,6 +5,7 @@ import {
   ListUsersPage,
   UpdateUserPage,
 } from "../pages/users/index";
+import { SaveGroupPage } from "../pages/groups/index";
 import { SaveGradePage } from "../pages/grades/index";
 import { CreateRolesPage } from "../pages/roles/index";
 import { Header } from "../layouts/index";
@@ -28,6 +29,7 @@ export const RoutesIndex = () => {
         <Route path="/list-all-users" element={<ListUsersPage />} />
         <Route path="/register-roles" element={<CreateRolesPage />} />
         <Route path="/save-grade" element={<SaveGradePage />} />
+        <Route path="/save-group" element={<SaveGroupPage />} />
         <Route
           element={
             <RutePrivate IsAuth={true} IsLoading={false} role={Roles.STUDENT} />
