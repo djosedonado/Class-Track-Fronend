@@ -1,16 +1,26 @@
 import { InputForm, useForm } from "../../../components/index";
 import { SingIn } from "../../../interfaces/users/user.interface";
+import { useRepositoryUser } from "../../../storas/users/user.stora";
 
 export const SignInPage = () => {
+  const { authenticateUser } = useRepositoryUser();
   const { form, resetForm, handleChange } = useForm<SingIn>({
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(form);
-    resetForm();
+    await authenticateUser(form).then((response) => {
+      if (response.status === 201) {
+        // Redireccionar al dashboard
+        console.log("Usuario logueado correctamente");
+        resetForm();
+      } else {
+        console.log("Error al loguearse");
+      }
+    });
   };
 
   return (

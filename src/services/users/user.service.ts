@@ -1,5 +1,5 @@
 import api from "../../api/axios";
-import { CreateUser } from "../../interfaces/users/user.interface";
+import { CreateUser, SingIn } from "../../interfaces/users/user.interface";
 
 export const CreateUserService = async (data: CreateUser) => {
   return api.post("/users/save", data);
@@ -7,7 +7,7 @@ export const CreateUserService = async (data: CreateUser) => {
 
 export const SearchAllUserService = () => {
   // servicio traer todo los usuario
-  return api.get("ruta de la api");
+  return api.get("/users/get-all");
 };
 
 export const SearchUserService = (id: number) => {
@@ -23,4 +23,8 @@ export const UpdateUserService = (id: number, data: any) => {
 export const DeleteUserService = (id: number) => {
   // servicio de eliminacion de un usuario
   return api.delete(`ruta de la api/${id}`);
+};
+
+export const AuthService = (data: SingIn) => {
+  return api.post("/users/sign-in", data);
 };

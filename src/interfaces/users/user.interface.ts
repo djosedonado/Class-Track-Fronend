@@ -11,3 +11,5 @@ export interface User {
 export type CreateUser = User;
 
 export type SingIn = Omit<User, "id" | "name" | "roles">;
+
+export type Update = Omit<User, "id">;
